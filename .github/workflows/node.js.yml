@@ -24,5 +24,24 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
-    - run: pm2 restart api
+        
+    - name: Install dependencies
+      run: npm ci
+
+    # Create .env file from GitHub Secrets
+    - name: Create .env file
+      run: |
+        echo "Creating .env file..."
+        echo "PORT=${{ secrets.PORT }}" >> .env
+        echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> .env
+        echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
+        echo "NODE_ENV=production" >> .env
+        cat .env
+
+    # Restart your Node.js app using PM2
+    - name: Restart app with PM2
+      run: |
+        echo "Restarting app with PM2..."
+        pm2 stop all || true
+        pm2 start server.js --name api
+        pm2 save
