@@ -29,3 +29,11 @@ jobs:
     - run: |
         touch .env
         echo "${{ secrets.PROD_ENV_FILE }}" >> .env
+
+    # Restart your Node.js app using PM2
+    - name: Restart app with PM2
+      run: |
+        echo "Restarting app with PM2..."
+        pm2 stop all || true
+        pm2 start server.js --name api
+        pm2 save
