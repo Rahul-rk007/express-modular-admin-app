@@ -21,6 +21,11 @@ app.use(express.json()); // Parse JSON bodies
 
 // Routes
 app.use("/api/users", userRoutes);
+app.use("/api/products", (req, res) => {
+  return res.status(200).json({
+    message: "This is a new feature",
+  });
+});
 
 // Error handler middleware
 app.use(errorHandler);
