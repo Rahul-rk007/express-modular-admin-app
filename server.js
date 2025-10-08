@@ -23,7 +23,7 @@ app.use(express.json()); // Parse JSON bodies
 app.use("/api/users", userRoutes);
 app.use("/api/products", (req, res) => {
   return res.status(200).json({
-    message: "This is a new feature for product api",
+    message: "This is a new feature for product api (new)",
   });
 });
 
